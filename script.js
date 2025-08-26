@@ -2,6 +2,10 @@ let num1 = 0;
 let num2 = 0;
 let operator = "";
 
+const calculatorDisplay = document.querySelector(".calculator-display");
+const numberButtons = document.querySelectorAll(".number");
+let displayContent = calculatorDisplay.innerText;
+
 function add(a, b) {
   return a + b;
 }
@@ -35,6 +39,8 @@ function operate(num1, num2, operator) {
   }
 }
 
-operate(1, 2, "+");
-
-operate(1, 2, "-");
+numberButtons.forEach((button) => {
+  button.addEventListener("click", (e) => {
+    calculatorScreen.innerText = button.innerText;
+  });
+});
