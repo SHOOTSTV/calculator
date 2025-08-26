@@ -26,7 +26,7 @@ function operate(num1, num2, operator) {
     case "-":
       console.log(subtract(num1, num2));
       break;
-    case "x":
+    case "*":
       console.log(multiply(num1, num2));
       break;
     case "/":
