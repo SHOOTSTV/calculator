@@ -76,8 +76,35 @@ numberButtons.forEach((btn) => {
 
 operatorButtons.forEach((btn) => {
   btn.addEventListener("click", () => {
+    const newOperator = btn.textContent;
+
+    // If user presses an operator after entering the second number,
+    // evaluate the existing pair first (single-pair evaluation),
+    // then set up for the next operation with the new operator.
+    if (selectedOperator && previousValue !== null && !shouldOverwrite) {
+      const prev = parseFloat(previousValue);
+      const curr = parseFloat(currentValue);
+
+      const result = operate(prev, curr, selectedOperator);
+      currentValue = result.toString();
+      updateDisplay();
+
+      // Prepare for chaining: use result as the first operand
+      previousValue = currentValue;
+      selectedOperator = newOperator;
+      shouldOverwrite = true;
+      return;
+    }
+
+    // If the user presses operators consecutively, just update the operator
+    if (shouldOverwrite) {
+      selectedOperator = newOperator;
+      return;
+    }
+
+    // First operator after entering a number
     previousValue = currentValue;
-    selectedOperator = btn.textContent;
+    selectedOperator = newOperator;
     shouldOverwrite = true;
   });
 });
