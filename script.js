@@ -131,5 +131,35 @@ clearButton.addEventListener("click", () => {
   updateDisplay();
 });
 
+// key support
+document.addEventListener("keydown", (e) => {
+  const key = e.key;
+
+  // digits
+  if (!isNaN(key) || key === ".") {
+    inputDigit(key);
+    updateDisplay();
+  }
+  if (["+", "-", "*", "/"].includes(key)) {
+    previousValue = currentValue;
+    selectedOperator = key;
+    shouldOverwrite = true;
+  }
+  if (key === "Enter" || key === "=") {
+    equalButton.click(); // on déclenche le même code que le bouton
+  }
+
+  // reset "C"
+  if (key === "Escape") {
+    clearButton.click();
+  }
+
+  if (key === "Backspace") {
+    if (shouldOverwrite) return; // si on doit remplacer, on ne fait rien
+    currentValue = currentValue.slice(0, -1) || "0";
+    updateDisplay();
+  }
+});
+
 // Initialize display
 updateDisplay();
